@@ -18,6 +18,4 @@ Para la construcción de este proyecto se han empleado exclusivamente tecnologí
 ## 👨‍💻 Autor
 
 * **Iker Santos** * *Estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM) y Técnico en Producción Audiovisual.*
-* 🌐 **Contacto:** [Mi perfil de LinkedIn](https://www.linkedin.com/in/tu-perfil/) | [Mi GitHub](https://github.com/tu-usuario)
-
-
+* 🌐 **Contacto:** [Mi perfil de LinkedIn](https://linkedin.com/in/iker-santos-insua) | [Mi GitHub](https://github.com/Ikeer3)
