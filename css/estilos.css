@@ -1,0 +1,494 @@
+/* =========================================
+   1. RESET Y VARIABLES GLOBALES
+   ========================================= */
+
+/* El selector universal (*) resetea los márgenes y paddings por defecto.
+   box-sizing: border-box hace que el padding no engorde el tamaño total de las cajas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* El pseudo-elemento :root es donde guardamos las variables para los colores, sombras y efectos */
+:root {
+    --bg-pagina: #2d6a4f;
+    --bg-raya: #1b4332;
+    --bg-tarjeta: #ffffff;
+    --bg-proyectos: rgba(45, 106, 79, 0.06);
+    --color-primario: #ed7c2c;
+    --color-acento: #081c15;
+    --texto-principal: #1e293b;
+    --texto-claro: #000000;
+    --sombra-fuerte: 0 10px 25px rgba(0, 0, 0, 0.25);
+    --degradado: linear-gradient(45deg, var(--bg-tarjeta), var(--color-primario));
+    --brillo-pildora: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+}
+
+/* ==============================================
+   2. ESTILOS BASE DEL BODY (Fondo y Estructura)
+   ============================================== */
+
+/* Creamos el fondo del estadio con un degradado lineal que se repite creando franjas.
+   Fijamos el fondo (background-attachment: fixed) para que no se mueva al hacer scroll.
+   Centramos el contenido limitando su ancho y dándole margen auto a los lados */
+body {
+    background-color: var(--bg-pagina);
+    background-image: repeating-linear-gradient(to bottom,
+            var(--bg-raya),
+            var(--bg-raya) 80px,
+            var(--bg-pagina) 80px,
+            var(--bg-pagina) 160px);
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--texto-principal);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 60px;
+    min-height: 100vh;
+}
+
+/* ===============================================
+   3. CABECERA (Header) Y SUS ELEMENTOS (Anidado)
+   =============================================== */
+
+/* Usamos Flexbox para poner el título a la izquierda y el puesto a la derecha.
+   Añadimos una línea separadora naranja en la parte inferior */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--color-primario);
+
+    /* ANIDAMIENTO: Estilos exclusivos para el h1 que está dentro del header.
+       Efecto de texto con degradado (recorta el fondo con la forma de la letra). */
+    h1 {
+        flex: 1;
+        text-align: left;
+        font-size: 2.2rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background: var(--degradado);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* ANIDAMIENTO: Estilos para el párrafo (Puesto/Especialidad) dentro del header. */
+    p {
+        color: var(--color-primario);
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        flex: 1;
+        text-align: right;
+    }
+}
+
+/* Botón/Píldora decorativa "Match Day" con bordes totalmente redondeados.
+   position: relative y overflow: hidden evitan que el brillo se salga del botón */
+.matchDay {
+    background: var(--color-primario);
+    color: var(--texto-claro);
+    padding: 8px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 0.98rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: var(--sombra-fuerte);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Reflejo brillante que pasa por encima de la píldora usando un pseudo-elemento */
+.matchDay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--brillo-pildora);
+    animation: shine 3.5s infinite;
+}
+
+/* Definición de la animación del brillo (de izquierda a derecha en bucle) */
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    50%,
+    100% {
+        left: 100%;
+    }
+}
+
+/* Logo del club dentro del botón.
+   z-index: 2 lo pone por encima del brillo para que no lo tape */
+.logoClub {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================
+   4. ESTRUCTURA CSS Grid Principal
+   ========================================= */
+
+/* Dibujamos el "mapa" de nuestro grid. 4 columnas en total.
+   Alto fijo para las 2 primeras filas, la 3ª se adapta */
+.contenido {
+    display: grid;
+    grid-template-areas:
+        "info info img1 intereses"
+        "filosofia img2 img2 intereses"
+        "proyectos proyectos proyectos proyectos";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 260px 260px auto;
+    gap: 25px;
+}
+
+/* =============================================
+   5. TARJETAS GLOBALES (Estilo y Animación 3D)
+   ============================================= */
+
+/* Estilos compartidos por TODAS las tarjetas del grid.
+   Transición suave con curva cubic-bezier para efecto muelle.
+   Borde transparente para que no de saltos al hacer hover */
+.tarjeta {
+    background-color: var(--bg-tarjeta);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: var(--sombra-fuerte);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+    border: 2px solid transparent;
+}
+
+/* Efecto 3D interactivo (Tipo carta de béisbol) al pasar el ratón.
+   perspective da profundidad, rotate gira, translateY levanta, scale agranda */
+.tarjeta:hover {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-8px) scale(1.01);
+    box-shadow: -10px 15px 25px rgba(0, 0, 0, 0.2); 
+    border: 2px solid var(--color-primario);
+}
+
+/* =========================================
+   6. ESTILOS ESPECÍFICOS DE CADA TARJETA
+   ========================================= */
+
+/* Tarjeta Principal Naranja (Info).
+   Se ubica en el área 'info' del mapa Grid */
+.tarjetaInfo {
+    grid-area: info;
+    background-color: var(--color-primario);
+    color: var(--texto-claro);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Barra decorativa blanca dentro de la tarjeta de info */
+.barraBlanca {
+    width: 100%;
+    height: 18px;
+    background-color: var(--bg-tarjeta);
+    margin-bottom: 25px;
+}
+
+/* Título de la tarjeta de info */
+.tarjetaInfo h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+    color: var(--texto-claro);
+}
+
+/* Párrafo descriptivo de la tarjeta de info */
+.tarjetaInfo p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: var(--texto-claro);
+}
+
+/* Tarjetas de Imágenes */
+.tarjetaImg1 {
+    grid-area: img1;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.tarjetaImg2 {
+    grid-area: img2;
+    padding: 15px;
+    overflow: hidden;
+}
+
+/* Hacemos que las imágenes llenen todo su contenedor sin deformarse (object-fit) */
+.tarjetaImg1 img,
+.tarjetaImg2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Tarjeta de Intereses (Herramientas) */
+.tarjetaIntereses {
+    grid-area: intereses;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Subtítulos dentro de las tarjetas (como el de Herramientas) */
+.subtituloTarjeta {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--texto-principal);
+    margin-bottom: 5px;
+}
+
+/* Limpiamos la lista por defecto del HTML y usamos Flexbox para alinear elementos */
+.listaHerramientas {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Cada elemento de la lista de herramientas */
+.listaHerramientas li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: var(--texto-principal);
+    line-height: 1.5;
+}
+
+/* Resalte en verde para el nombre de la herramienta */
+.nombreHerramienta {
+    color: var(--bg-pagina);
+    font-weight: 800;
+}
+
+/* Tamaño y alineación de los emojis de la lista */
+.iconoLista {
+    font-size: 1.1rem;
+    line-height: 1.2;
+}
+
+/* Tarjeta de Filosofía */
+.tarjetaFilosofia {
+    grid-area: filosofia;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+}
+
+/* Títulos h3 (Etiquetas de sección con rayita) */
+.tarjeta h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--bg-pagina);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Dibujamos la rayita naranja usando CSS, sin meter HTML extra */
+h3::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 18px;
+    background-color: var(--color-primario);
+    border-radius: 4px;
+}
+
+/* Estilo para la cita en cursiva dentro de Filosofía */
+.citaFilosofia {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--texto-principal);
+    line-height: 1.5;
+    font-style: italic;
+}
+
+/* Tarjeta Inferior de Proyectos */
+.tarjetaProyectos {
+    grid-area: proyectos;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Mini-Grid interno para poner los proyectos en 2 columnas */
+.contenedorProyectos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 18px;
+}
+
+/* Cada caja individual de proyecto.
+   Detalle naranja a la izquierda con border-left */
+.itemProyecto {
+    background-color: var(--bg-proyectos);
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-primario);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título del proyecto individual */
+.itemProyecto h4 {
+    color: var(--bg-pagina);
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+/* Descripción del proyecto.
+   flex-grow: 1 empuja el botón de enlace hacia el fondo de la caja */
+.itemProyecto p {
+    color: var(--texto-principal);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* ===================================================
+   7. BOTONES MULTICAPA (Anidamiento y Efecto Arcade)
+   =================================================== */
+
+/* Estilo principal del botón de enlace a proyectos.
+   Efecto "Chunky": Dos sombras sólidas para crear dos capas extra de grosor debajo */
+.enlaceProyecto {
+    background-color: var(--bg-pagina);
+    color: var(--bg-tarjeta);
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    box-shadow: 0 6px 0 var(--color-primario), 
+                0 12px 0 var(--color-acento);
+    transition: transform 0.15s ease-out, background-color 0.15s ease-out, color 0.15s ease-out;
+
+    /* ANIDAMIENTO: Estado Hover (Al pasar el ratón).
+       Oscurecemos la tapa y el bloque entero baja 4px.
+       Mantenemos las sombras intactas para que bajen en bloque */
+    &:hover {
+        background-color: var(--bg-raya);
+        color: var(--color-primario);
+        transform: translateY(4px); 
+        box-shadow: 0 6px 0 var(--color-primario), 
+                    0 12px 0 var(--color-acento);
+    }
+
+    /* ANIDAMIENTO: Estado Active (Al hacer clic).
+       El bloque baja aún más al "pulsar" */
+    &:active {
+        transform: translateY(6px); 
+        box-shadow: 0 6px 0 var(--color-primario), 
+                    0 12px 0 var(--color-acento);
+    }
+}
+
+/* =========================================
+   8. DISEÑO RESPONSIVE (Móviles y Tablets)
+   ========================================= */
+
+/* --- TABLETS (Pantallas medianas hasta 1024px) --- */
+
+/* Reorganizamos el Grid de 4 columnas a 2 columnas.
+   Forzamos un alto mínimo a las imágenes para que no se aplasten */
+@media (max-width: 1024px) {
+    body {
+        padding: 30px 40px;
+    }
+
+    .contenido {
+        grid-template-columns: repeat(2, 1fr); 
+        grid-template-rows: auto;
+        grid-template-areas:
+            "info info"
+            "img1 intereses"
+            "filosofia intereses"
+            "img2 img2"
+            "proyectos proyectos";
+    }
+    
+    .tarjetaImg1, .tarjetaImg2 {
+        min-height: 280px; 
+    }
+}
+
+/* --- MÓVILES (Pantallas pequeñas hasta 768px) --- */
+
+/* El Grid principal y el de proyectos pasan a 1 sola columna.
+   Apilamos la cabecera en vertical y la centramos */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    header h1 {
+        text-align: center;
+        font-size: 1.8rem;
+    }
+
+    header p {
+        text-align: center;
+    }
+
+    .contenido {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "info"
+            "img1"
+            "filosofia"
+            "intereses"
+            "img2"
+            "proyectos";
+    }
+
+    .contenedorProyectos {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
