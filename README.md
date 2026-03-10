@@ -1,4 +1,4 @@
-# 🖥️ Práctica: Portfolio Web Personal
+# 🖥️ Práctica: Moodboard Web Personal
 
 ## 📖 Descripción del Proyecto
 
@@ -19,3 +19,4 @@ Para la construcción de este proyecto se han empleado exclusivamente tecnologí
 
 * **Iker Santos** * *Estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM) y Técnico en Producción Audiovisual.*
 * 🌐 **Contacto:** [Mi perfil de LinkedIn](https://www.linkedin.com/in/tu-perfil/) | [Mi GitHub](https://github.com/tu-usuario)
+
