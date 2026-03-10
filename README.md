@@ -2,7 +2,7 @@
 
 ## 📖 Descripción del Proyecto
 
-Este repositorio contiene el código de mi moodboard web personal, diseñado y desarrollado como parte de mis prácticas y ejercicios de la asignatura Lenguaje de Marcas.
+Este repositorio contiene el código HTML de mi moodboard web personal, diseñado y desarrollado como parte de mis prácticas y ejercicios de la asignatura Lenguaje de Marcas.
 
 El objetivo principal de este proyecto ha sido aplicar y consolidar conceptos avanzados de diseño web moderno, creando una interfaz atractiva, funcional y **100% responsive**. Para ello, se ha implementado un diseño modular tipo "Bento Box" con temática deportiva, que sirve como escaparate para presentar mi perfil profesional, mi formación y mis habilidades técnicas mediante interacciones fluidas y efectos 3D.
 
@@ -19,3 +19,4 @@ Para la construcción de este proyecto se han empleado exclusivamente tecnologí
 
 * **Iker Santos** * *Estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM) y Técnico en Producción Audiovisual.*
 * 🌐 **Contacto:** [Mi perfil de LinkedIn](https://linkedin.com/in/iker-santos-insua) | [Mi GitHub](https://github.com/Ikeer3)
+
