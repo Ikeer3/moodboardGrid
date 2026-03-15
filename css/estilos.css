@@ -49,7 +49,7 @@ body {
 }
 
 /* ===============================================
-   3. CABECERA (Header) Y SUS ELEMENTOS (Anidado)
+   3. CABECERA Y SUS ELEMENTOS (Anidado)
    =============================================== */
 
 /* Usamos Flexbox para poner el título a la izquierda y el puesto a la derecha.
@@ -171,9 +171,9 @@ header {
     border-radius: 12px;
     padding: 30px;
     box-shadow: var(--sombra-fuerte);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                box-shadow 0.4s ease,
-                border-color 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
     border: 2px solid transparent;
 }
 
@@ -181,7 +181,7 @@ header {
    perspective da profundidad, rotate gira, translateY levanta, scale agranda */
 .tarjeta:hover {
     transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-8px) scale(1.01);
-    box-shadow: -10px 15px 25px rgba(0, 0, 0, 0.2); 
+    box-shadow: -10px 15px 25px rgba(0, 0, 0, 0.2);
     border: 2px solid var(--color-primario);
 }
 
@@ -315,7 +315,7 @@ header {
 }
 
 /* Dibujamos la rayita naranja usando CSS, sin meter HTML extra */
-h3::before {
+.tarjeta h3::before {
     content: '';
     display: block;
     width: 4px;
@@ -399,32 +399,95 @@ h3::before {
     align-items: center;
     gap: 8px;
     align-self: flex-start;
-    box-shadow: 0 6px 0 var(--color-primario), 
-                0 12px 0 var(--color-acento);
+    box-shadow: 0 6px 0 var(--color-primario),
+        0 12px 0 var(--color-acento);
     transition: transform 0.15s ease-out, background-color 0.15s ease-out, color 0.15s ease-out;
 
-    /* ANIDAMIENTO: Estado Hover (Al pasar el ratón).
+    /* ANIDAMIENTO: Estado Hover.
        Oscurecemos la tapa y el bloque entero baja 4px.
        Mantenemos las sombras intactas para que bajen en bloque */
     &:hover {
         background-color: var(--bg-raya);
         color: var(--color-primario);
-        transform: translateY(4px); 
-        box-shadow: 0 6px 0 var(--color-primario), 
-                    0 12px 0 var(--color-acento);
+        transform: translateY(4px);
+        box-shadow: 0 6px 0 var(--color-primario),
+            0 12px 0 var(--color-acento);
     }
 
     /* ANIDAMIENTO: Estado Active (Al hacer clic).
        El bloque baja aún más al "pulsar" */
     &:active {
-        transform: translateY(6px); 
-        box-shadow: 0 6px 0 var(--color-primario), 
-                    0 12px 0 var(--color-acento);
+        transform: translateY(6px);
+        box-shadow: 0 6px 0 var(--color-primario),
+            0 12px 0 var(--color-acento);
     }
 }
 
+/* ===========
+   8. FOOTER
+   =========== */
+
+/* Contenedor principal del footer.
+   Lo estilizamos como una pastilla que ocupa todo el ancho.
+   Usamos Flexbox para separar el texto de los botones.
+   Añadimos un margen superior para separarlo del grid principal. */
+footer {
+    background-color: var(--bg-tarjeta);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: var(--sombra-fuerte);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    border-top: 4px solid var(--color-primario);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+/* Efecto 3D sutil (levitación) al pasar el ratón por todo el footer */
+footer:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Título de llamada a la acción en el footer */
+.textoFooter h3 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--bg-pagina);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Contenedor de los enlaces sociales usando Flexbox para ponerlos en fila */
+.enlacesSociales {
+    display: flex;
+    gap: 15px;
+}
+
+/* Estilo de los enlaces individuales del footer.
+   Diseño en forma de píldora interactiva con el verde secundario. */
+.enlaceFooter {
+    background-color: var(--bg-proyectos);
+    color: var(--bg-pagina);
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover. Se enciende en naranja al pasar el ratón. */
+.enlaceFooter:hover {
+    background-color: var(--color-primario);
+    color: var(--texto-claro);
+    transform: translateY(-2px);
+}
+
 /* =========================================
-   8. DISEÑO RESPONSIVE (Móviles y Tablets)
+   9. DISEÑO RESPONSIVE (Móviles y Tablets)
    ========================================= */
 
 /* --- TABLETS (Pantallas medianas hasta 1024px) --- */
@@ -437,7 +500,7 @@ h3::before {
     }
 
     .contenido {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto;
         grid-template-areas:
             "info info"
@@ -446,9 +509,17 @@ h3::before {
             "img2 img2"
             "proyectos proyectos";
     }
-    
-    .tarjetaImg1, .tarjetaImg2 {
-        min-height: 280px; 
+
+    .tarjetaImg1,
+    .tarjetaImg2 {
+        min-height: 280px;
+    }
+
+    /* El footer permite que sus elementos salten de línea si falta espacio en tablet */
+    footer {
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
     }
 }
 
@@ -490,5 +561,24 @@ h3::before {
     .contenedorProyectos {
         grid-template-columns: 1fr;
         gap: 25px;
+    }
+
+    /* Aumentamos la altura mínima para que la imagen se vea bien */
+    .tarjetaImg2 {
+        min-height: 165px; 
+    }
+
+    /* El footer pasa a columna, centrando todo el contenido */
+    footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 25px 20px;
+    }
+
+    /* Los botones del footer se envuelven y se centran para no salirse de la pantalla */
+    .enlacesSociales {
+        flex-wrap: wrap;
+        justify-content: center;
     }
 }
